@@ -1,0 +1,6 @@
+NETWORKING=yes
+FORWARD_IPV4=false
+HOSTNAME=redhat52.localdomain
+DOMAINNAME=localdomain
+GATEWAY=192.168.1.1
+GATEWAYDEV=eth0

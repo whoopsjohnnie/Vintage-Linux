@@ -1,0 +1,4 @@
+MOUSETYPE="ps/2"
+XMOUSETYPE="PS/2"
+FULLNAME="Generic Mouse (PS/2)"
+XEMU3=yes

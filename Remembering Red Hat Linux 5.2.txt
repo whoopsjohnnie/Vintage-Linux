@@ -1,0 +1,40 @@
+
+http://marcosgildavid.blogspot.com/2014/07/remembering-red-hat-linux-52-from-1998.html
+
+Remembering Red Hat Linux 5.2 (from 1998) - Part I (Installation)
+
+
+My first contact with Linux was when I was finishing High-School in 1999. A friend from class gave a copy of Red Hat Linux 5.2 and a small 20 pages manual.
+I remember getting home firing up my "powerful" AMD K6 machine and getting immediately frustrated: I didn't have enough disk space for a dual boot...
+
+No problem, since I had recently installed my Windows 98 I decided to backup any important files to floppy disks and format the hard drive.
+
+Before starting the installation process I opened the PC case and took note of most of my Hardware chips since my friend warned me this would be required in the setup process.
+
+And so I happily proceeded with the installation. Everything was going great until I had to choose my video card... a Riva TNT2 64 which, at the time, wasn't supported. This ruined the experience for me since I was stuck with a 640x480 8 bit display. Since it was my first time running Linux I didn't know enough command-line to get started so I had to accept defeat and re-installed Windows 98 :(
+
+Although it was a bad first experience, at the time I was very intrigued and excited about the concept of a free operating system and that "regular" people we're joining up to create something completely open-source and that anyone could join in and contribute.
+I had no idea that this "community" project would be such a big part of my life :-)
+
+Anyway, for the sake of nostalgia and to experience the O.S. I never had the change to try, here is a guide to running Red Hat Linux 5.2 on QEMU.
+
+
+1 - Download a Red Hat Linux 5.2 iso image from the Internet Archive:
+https://archive.org/details/redhat-5.2_release
+
+2 - Download QEMU for your linux distro (use your package management tool) or Windows from here: http://qemu.weilnetz.de
+I used version (2.1.0-rc2)
+
+3 - Extract the contents of the installation package of QEMU or run the installer.
+
+4 - Create a disk image to use with your Red Hat 5.2 Virtual Machine, I'll be creating a disk image with 1GB since this was more than enough at the time (my first disk had about 850 MB)
+
+qemu-img create -f qcow2 redhat52.img 1G
+
+5 - Run qemu with a special vga card (cirrus) that is compatible with these old linux distributions, also use 256M of RAM and attach the cdrom image to the VM:
+
+qemu-system-i386 -hda "<path to disk image>\redhat52.img" -cdrom "<path to iso>\redhat-5.2-i386.iso"  -m 256 -vga cirrus
+
+The -vga cirrus parameter is essential to get a desktop later on.
+
+6 - Begin the installation!

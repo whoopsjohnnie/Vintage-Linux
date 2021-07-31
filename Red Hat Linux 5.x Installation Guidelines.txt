@@ -1,0 +1,34 @@
+
+https://www.vmware.com/support/ws3/doc/ws32_guestos22.html
+
+Red Hat Linux 5.x Installation Guidelines
+
+
+Before installing the operating system, be sure that you have already created a directory for the new virtual machine and configured it using the VMware Workstation New Virtual Machine Wizard (on Windows hosts) or Configuration Wizard (on Linux hosts).
+
+Installation Steps
+
+Use the VMware Workstation Configuration Editor to verify the virtual machine's devices are set up as you expect before starting the installation. For example, if you would like networking software to be installed during the Red Hat Linux 5.x installation process, be sure the virtual machine's Ethernet adapter is enabled and configured. VMware also recommends that you disable the screen saver on the host system before starting the installation process.
+
+Insert the Red Hat Linux 5.x CD in the CD-ROM drive and click Power On.
+
+Follow the installation steps as you would for a physical PC.
+
+Choose PS/2 mouse for your mouse configuration.
+
+To set up your monitor:
+ In the Choose a Card screen, select Generic VGA Compatible.
+ In the Monitor Setup screen, select Generic Monitor.
+ In the Screen Configuration screen, select Probe.
+Note: Initially, you have a VGA X server. When you install VMware Tools, after you finish installing Linux, you automatically replace the VGA X server with an accelerated SVGA X server.
+
+The network card needs to be set up and configured as an AMD PC/Net 32 to give the virtual machine network connectivity.
+Select AMD PC/Net 32 as the network card. You do not need to add any optional parameters.
+
+Install the bootloader in the master boot record in your virtual machine.
+
+VMware Tools
+Be sure to install VMware Tools in your guest operating system. For details, see Installing VMware Tools.
+
+Known Issues
+On a Linux host with an XFree86 3.x X server, it is best not to run a screen saver in the guest operating system. Guest screen savers that demand a lot of processing power can cause the X server on the host to freeze.
