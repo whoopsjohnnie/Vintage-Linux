@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# /etc/rc.d/rc.local:  Local system initialization script.
+#
+# Put any local setup commands in here:
+# Running gpm
+# gpm interferes with X, I cannot run both at the same time
+# echo "Running gpm..."
+# gpm -R -m /dev/mouse -t ps2

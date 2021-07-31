@@ -1,0 +1,25 @@
+
+https://virtuallyfun.com/wordpress/2010/05/12/slackware-3-5/
+
+Slackware 3.5 - Fun with virtualization
+
+
+A friend of mine was having a hard time trying to configure XF86 from the old Slackware 3.5 days… 1998.
+
+Wow time sure has flown!
+
+Anyways I kind of liked Linux back then as a lot of distros had OpenLook, which made my Linux box feel like a way cheaper SUN box.
+
+While Slackware 3.5 installs great on Virtual PC, the networking just crashes out… So I thought I’d just fire it up on Qemu.
+
+qemu.exe -net nic,model=ne2k_pci -net user -hda Slackware 3.5 Hard Disk.vhd” -L pc-bios -redir tcp:58080::80
+
+And with a bit of tweaking I managed to get it running!
+
+Although with normal VGA there is some weird issues with the cursor…
+
+It was about as hard as I remember for the xf86config days… you kind of had to mash a few together to get it working…
+
+And if it saves anyone the hassle, here is the XF86Config. (gzipped!)
+
+This is basically regular VGA with a PS/2 mouse… It works on Qemu & Virtual PC, so I’m sure your favorite emulator ought to work as well.

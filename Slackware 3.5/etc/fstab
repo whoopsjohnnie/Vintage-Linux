@@ -1,0 +1,4 @@
+/dev/hda1       swap        swap        defaults   0   0
+/dev/hda2       /        ext2        defaults   1   1
+/dev/hdc       /cdrom        iso9660       ro   0   0
+none             /proc    proc        defaults   0   0

@@ -1,0 +1,282 @@
+#!/bin/sh
+# rc.modules 1.2  Sat Feb 21 01:51:30 CST 1998 pjv <volkerdi@cdrom.com>
+#
+# This file loads extra drivers into the Linux kernel.
+# The modules will be looked for under /lib/modules/<kernel version number>
+#
+# Most Linux kernel modules will accept extra options such as IRQ or base
+# address, or to set various modes (such as 10baseT or BNC, etc).  The Linux
+# kernel source is the best place to look for extra documentation for the
+# various modules.  This can be found under /usr/src/linux-2.0.33 if you've
+# installed it.  Also, the kernel source docs are present on the Slackware
+# CD in the /docs/linux-2.0.33 directory.
+#
+# NOTE:  If any problems arise loading or using these modules, try compiling
+# and installing a custom kernel that contains the support instead.  That
+# always works. ;^)
+#
+
+# Update module dependencies:
+echo "Updating module dependencies for Linux `uname -r`:"
+/sbin/depmod -a
+
+# Automatic module loading.  To load and unload kernel modules
+# automatically as needed, uncomment the lines below to run kerneld.
+# In some cases, you'll need to create aliases to load the correct
+# module. For more information, see the docs in /usr/doc/modules.
+
+#if [ -x /sbin/kerneld ]; then
+#  /sbin/kerneld
+#fi
+
+# These modules add CD-ROM drive support.  Most of these drivers will probe
+# for the I/O address and IRQ of the drive automatically if the parameters
+# to configure them are omitted. Typically the I/O address will be specified 
+# in hexadecimal, e.g.: cm206=0x300,11
+#
+# ***NONE*** of these drivers are for use with IDE/ATAPI CD-ROM drives.  That
+# support is already built into every pre-compiled Slackware Linux kernel.
+# Also, note that all of the manufacturers listed below stopped making these
+# types of wacky-interface drives years ago and all make IDE/ATAPI-interface
+# CD-ROM drives now.  So, just because your drive says "Mitsumi" on it is not 
+# reason enough to think you need the special Mitsumi module loaded, etc.  If
+# you got your drive within the last couple of years it's probably IDE.  Try 
+# tossing a disc in the drive and mounting it on the various IDE interfaces it
+# could be using, like /dev/hdc. 
+# 
+#/sbin/modprobe aztcd aztcd=<I/O address>
+#/sbin/modprobe cdu31a cdu31a_port=<I/O address> cdu31a_irq=<interrupt>
+#/sbin/modprobe cm206 cm206=<I/O address>,<IRQ>
+#/sbin/modprobe gscd gscd=<I/O address>
+#/sbin/modprobe mcd mcd=<I/O address>,<IRQ>
+#/sbin/modprobe mcdx mcdx=<I/O address>,<IRQ>
+#/sbin/modprobe optcd optcd=<I/O address>
+# Below, this last number is "1" for SoundBlaster Pro card, or "0" for a clone.
+#/sbin/modprobe sbpcd sbpcd=<I/O address>,1
+#/sbin/modprobe sonycd535 sonycd535=<I/O address>
+#/sbin/modprobe sjcd sjcd=<I/O address>
+
+# CD-ROM drives on ISP16, MAD16 or Mozart sound card:
+#/sbin/modprobe isp16=[<port>[,<irq>[,<dma>]]][[,]<drive_type>]
+#  where the values are one of: port=0x340,0x320,0x330,0x360
+#                               irq=0,3,5,7,9,10,11
+#                               dma=0,3,5,6,7
+#                               drive_type=noisp16,Sanyo,Panasonic,Sony,Mitsumi
+
+# Parallel port (printer) support:
+/sbin/modprobe lp
+
+# Cyclades multiport serial card support:
+#/sbin/modprobe cyclades
+
+# Serial line IP support (SLIP/CSLIP/PPP):
+# This module is for SLIP/CSLIP support:
+/sbin/modprobe slip
+# This module is for PPP support:
+/sbin/modprobe ppp
+# This module provides BSD compression for PPP (optional):
+#/sbin/modprobe bsd_comp
+
+# Sound support:
+# (The sound module included with Slackware is configured for a SoundBlaster 16
+# AWE32, or AWE64 at I/O 0x220 IRQ 5.  If you have a different configuration 
+# you'll need to compile your own module from the Linux kernel source)
+#/sbin/modprobe sound
+
+# Joystick support:
+#/sbin/modprobe joystick
+
+# Appletalk support (needed if you want to run netatalk, a package which allows
+# you to use you Linux box as a file and print server for Apple Macintosh 
+# computers on your local network):
+#/sbin/modprobe appletalk
+
+# IPX networking support:
+#/sbin/modprobe ipx
+
+# Network device support:
+# Most of these drivers will probe automatically for the card if you don't
+# specify an I/O address and IRQ.  But, the NE2000 driver needs at least the
+# I/O.  For complete information, see the net-modules.txt file that comes
+# with the Linux 2.0.0 source code.  This file can also be found on the
+# Slackware CD-ROM in the /docs/kernel.20 directory.
+#
+# Ethernet cards based on the 8390 chip.
+#/sbin/modprobe 3c503 
+#/sbin/modprobe ac3200
+#/sbin/modprobe e2100
+#/sbin/modprobe hp-plus
+#/sbin/modprobe hp
+#/sbin/modprobe ne io=0x300 # NE2000 at 0x300
+#/sbin/modprobe ne io=0x280 # NE2000 at 0x280
+#/sbin/modprobe ne io=0x320 # NE2000 at 0x320
+#/sbin/modprobe ne io=0x340 # NE2000 at 0x340
+#/sbin/modprobe ne io=0x360 # NE2000 at 0x360
+# QEMU ne2k_pci, NE2000, IRQ=10, io=0x
+/sbin/modprobe ne
+#/sbin/modprobe smc-ultra
+#/sbin/modprobe wd
+#
+# Other ethernet card drivers:
+#/sbin/modprobe 3c501
+#/sbin/modprobe 3c503
+#/sbin/modprobe 3c505
+#/sbin/modprobe 3c507
+#/sbin/modprobe 3c509
+# This one works for all 3com 3c590/3c592/3c595/3c597 and the
+# EtherLink XL 3c900 and 3c905 cards:
+#/sbin/modprobe 3c59x
+#/sbin/modprobe apricot
+#/sbin/modprobe arcnet
+#/sbin/modprobe at1700
+#/sbin/modprobe de4x5
+#/sbin/modprobe de600
+#/sbin/modprobe de620
+#/sbin/modprobe depca
+#/sbin/modprobe dgrs
+#/sbin/modprobe eepro
+#/sbin/modprobe eexpress
+#/sbin/modprobe eth16i
+#/sbin/modprobe ewrk3
+#/sbin/modprobe fmv18x
+#/sbin/modprobe hp100
+#/sbin/modprobe ibmtr
+#/sbin/modprobe ni52
+#/sbin/modprobe ni65
+#/sbin/modprobe smc9194
+#/sbin/modprobe tulip
+#/sbin/modprobe wavelan
+
+# Parallel port IP:
+#/sbin/modprobe plip
+
+# Serial line load balancing support:
+#/sbin/modprobe eql
+
+# A dummy IP driver.  Essentially a loopback device.  Can be useful --
+# see the Network Administrator's Guide from sunsite.unc.edu:/pub/Linux/docs/LDP
+#/sbin/modprobe dummy
+
+# ISDN kernel support:
+#/sbin/modprobe isdn
+# ICN active ISDN card driver:
+#/sbin/modprobe icn
+# PCBIT-D driver:
+#/sbin/modprobe pcbit
+# SpellCaster ISA ISDN Adapter driver:
+#/sbin/modprobe sc
+
+# Binary format support:
+#/sbin/modprobe binfmt_aout
+#/sbin/modprobe binfmt_elf
+#/sbin/modprobe binfmt_java
+
+# Filesystem support:
+#/sbin/modprobe ext2
+#/sbin/modprobe hfs
+#/sbin/modprobe hpfs
+#/sbin/modprobe isofs
+#/sbin/modprobe minix
+#/sbin/modprobe msdos
+#/sbin/modprobe ncpfs
+#/sbin/modprobe nfs
+#/sbin/modprobe smbfs
+#/sbin/modprobe sysv
+#/sbin/modprobe ufs
+#/sbin/modprobe umsdos
+#/sbin/modprobe vfat
+#/sbin/modprobe xiafs
+
+# RAID (Multiple Devices) support:
+#/sbin/modprobe linear
+#/sbin/modprobe raid0
+
+# SCSI kernel support:
+#/sbin/modprobe scsi_mod
+#/sbin/modprobe scsi_syms
+#/sbin/modprobe sd_mod
+#/sbin/modprobe sg
+#/sbin/modprobe st
+
+# SCSI controller support:
+#/sbin/modprobe 53c7,8xx
+#/sbin/modprobe AM53C974
+#/sbin/modprobe BusLogic
+#/sbin/modprobe NCR53c406a
+#/sbin/modprobe advansys
+#/sbin/modprobe aha152x
+#/sbin/modprobe aha1542
+#/sbin/modprobe aha1740
+#/sbin/modprobe aic7xxx
+#/sbin/modprobe dtc
+#/sbin/modprobe eata
+#/sbin/modprobe eata_dma
+#/sbin/modprobe eata_pio
+#/sbin/modprobe fdomain
+#/sbin/modprobe g_NCR5380
+#/sbin/modprobe gdth
+#/sbin/modprobe in2000
+#/sbin/modprobe ncr53c8xx
+#/sbin/modprobe pas16
+#/sbin/modprobe ppa
+#/sbin/modprobe qlogicfas
+#/sbin/modprobe qlogicisp
+#/sbin/modprobe seagate
+#/sbin/modprobe sr_mod
+#/sbin/modprobe t128
+#/sbin/modprobe tmscsim
+#/sbin/modprobe u14-34f
+#/sbin/modprobe ultrastor
+#/sbin/modprobe wd7000
+
+# Mouse support:
+#/sbin/modprobe atixlmouse
+#/sbin/modprobe busmouse
+#/sbin/modprobe msbusmouse
+# The PS/2 mouse is very common, so we will try to load module support for
+# it by default:
+/sbin/modprobe psaux 2> /dev/null # we will report the results ourselves
+if [ ! $? = 0 ]; then
+ echo "No PS/2 mouse device found on this machine."
+fi
+
+# Floppy drive support:
+# (Most Linux kernels should already contain this)
+#/sbin/modprobe floppy
+
+# Floppy tape support (such as Colorado Jumbo 250 or other QIC-80 drives):
+#/sbin/modprobe ftape
+
+# IP masquerading modules:
+# These modules are used with IP masquerading, a process which allows you to
+# use a Linux box connected to the Internet (via PPP or SLIP, or some other
+# means) as a gateway for other Linux, Windows, Macintosh boxes on your local
+# network that don't have real IP addresses on the Internet.  The packets
+# going through the Linux machine are "masqueraded", or made to look as if
+# they're all coming from the one real IP address on the Internet.
+#
+# As a quick example (for a much more extensive treatment, see the IP-Masquerade
+# mini-HOWTO) to allow Internet access to a local network 192.168.11.0 with a
+# netmask of 255.255.255.0, you'd use these commands in /etc/rc.d/rc.local:
+#    ipfwadm -F -p deny
+#    ipfwadm -F -a m -b -S 192.168.93.0/24 -D 0.0.0.0/0
+# Then you'd have to set the other boxes on your local network to use the
+# Linux machine as their TCP/IP gateway.  You'll probably also need to plug
+# in the IP address for your Internet service provider in each machine's DNS
+# setup.
+#
+# Now, on to the IP masquerading modules.  The example above is good enough
+# for most things that use TCP in a relatively simple fashion.  It'll work
+# for telnet and http, for instance.  But, the system breaks down when you
+# get protocols that use ports in more complicated ways.  Luckily the Linux
+# kernel gurus have thought of this and have prepared some modules that
+# support masquerading of trickier protocols.  The ipfwadm command is mighty
+# flexible as well, and a lot of things can be made to work just by setting
+# that up correctly.
+#/sbin/modprobe ip_masq_cuseeme
+#/sbin/modprobe ip_masq_ftp
+#/sbin/modprobe ip_masq_irc
+#/sbin/modprobe ip_masq_quake
+#/sbin/modprobe ip_masq_raudio
+#/sbin/modprobe ip_masq_vdolive
+
